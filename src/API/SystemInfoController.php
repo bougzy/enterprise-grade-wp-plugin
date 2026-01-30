@@ -26,11 +26,24 @@ final class SystemInfoController extends WP_REST_Controller {
 	protected $namespace = 'flavor-flow/v1';
 	protected $rest_base = 'system';
 
+	/** @var TriggerRegistry */
+	private $triggers;
+
+	/** @var ConditionEvaluator */
+	private $conditions;
+
+	/** @var ActionRegistry */
+	private $actions;
+
 	public function __construct(
-		private readonly TriggerRegistry $triggers,
-		private readonly ConditionEvaluator $conditions,
-		private readonly ActionRegistry $actions,
-	) {}
+		TriggerRegistry $triggers,
+		ConditionEvaluator $conditions,
+		ActionRegistry $actions
+	) {
+		$this->triggers   = $triggers;
+		$this->conditions = $conditions;
+		$this->actions    = $actions;
+	}
 
 	public function register_routes(): void {
 		register_rest_route( $this->namespace, '/' . $this->rest_base, [

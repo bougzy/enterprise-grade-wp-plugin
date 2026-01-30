@@ -100,29 +100,29 @@ final class WorkflowController extends WP_REST_Controller {
 
 	// ---- Permission callbacks ----
 
-	public function get_items_permissions_check( $request ): bool|WP_Error {
+	public function get_items_permissions_check( $request ) {
 		return current_user_can( 'edit_ff_workflows' );
 	}
 
-	public function get_item_permissions_check( $request ): bool|WP_Error {
+	public function get_item_permissions_check( $request ) {
 		return current_user_can( 'edit_ff_workflow', $request['id'] );
 	}
 
-	public function create_item_permissions_check( $request ): bool|WP_Error {
+	public function create_item_permissions_check( $request ) {
 		return current_user_can( 'publish_ff_workflows' );
 	}
 
-	public function update_item_permissions_check( $request ): bool|WP_Error {
+	public function update_item_permissions_check( $request ) {
 		return current_user_can( 'edit_ff_workflow', $request['id'] );
 	}
 
-	public function delete_item_permissions_check( $request ): bool|WP_Error {
+	public function delete_item_permissions_check( $request ) {
 		return current_user_can( 'delete_ff_workflow', $request['id'] );
 	}
 
 	// ---- CRUD callbacks ----
 
-	public function get_items( $request ): WP_REST_Response|WP_Error {
+	public function get_items( $request ) {
 		$args = [
 			'post_type'      => 'ff_workflow',
 			'post_status'    => 'any',
@@ -151,7 +151,7 @@ final class WorkflowController extends WP_REST_Controller {
 		return $response;
 	}
 
-	public function get_item( $request ): WP_REST_Response|WP_Error {
+	public function get_item( $request ) {
 		$post = get_post( $request['id'] );
 
 		if ( ! $post || 'ff_workflow' !== $post->post_type ) {
@@ -161,7 +161,7 @@ final class WorkflowController extends WP_REST_Controller {
 		return $this->prepare_item_for_response( $post, $request );
 	}
 
-	public function create_item( $request ): WP_REST_Response|WP_Error {
+	public function create_item( $request ) {
 		$post_id = wp_insert_post( [
 			'post_type'   => 'ff_workflow',
 			'post_title'  => sanitize_text_field( $request->get_param( 'title' ) ?: __( 'Untitled Workflow', 'flavor-flow' ) ),
@@ -179,7 +179,7 @@ final class WorkflowController extends WP_REST_Controller {
 		return $this->prepare_item_for_response( $post, $request );
 	}
 
-	public function update_item( $request ): WP_REST_Response|WP_Error {
+	public function update_item( $request ) {
 		$post = get_post( $request['id'] );
 
 		if ( ! $post || 'ff_workflow' !== $post->post_type ) {
@@ -200,7 +200,7 @@ final class WorkflowController extends WP_REST_Controller {
 		return $this->prepare_item_for_response( $post, $request );
 	}
 
-	public function delete_item( $request ): WP_REST_Response|WP_Error {
+	public function delete_item( $request ) {
 		$post = get_post( $request['id'] );
 
 		if ( ! $post || 'ff_workflow' !== $post->post_type ) {
@@ -212,7 +212,7 @@ final class WorkflowController extends WP_REST_Controller {
 		return new WP_REST_Response( [ 'deleted' => true ], 200 );
 	}
 
-	public function duplicate_item( WP_REST_Request $request ): WP_REST_Response|WP_Error {
+	public function duplicate_item( WP_REST_Request $request ) {
 		$post = get_post( $request['id'] );
 
 		if ( ! $post || 'ff_workflow' !== $post->post_type ) {
@@ -245,7 +245,7 @@ final class WorkflowController extends WP_REST_Controller {
 		return $this->prepare_item_for_response( get_post( $new_id ), $request );
 	}
 
-	public function toggle_item( WP_REST_Request $request ): WP_REST_Response|WP_Error {
+	public function toggle_item( WP_REST_Request $request ) {
 		$post = get_post( $request['id'] );
 
 		if ( ! $post || 'ff_workflow' !== $post->post_type ) {
@@ -306,7 +306,11 @@ final class WorkflowController extends WP_REST_Controller {
 	/**
 	 * Recursively sanitize an array/scalar.
 	 */
-	private function sanitize_deep( mixed $value ): mixed {
+	/**
+	 * @param mixed $value
+	 * @return mixed
+	 */
+	private function sanitize_deep( $value ) {
 		if ( is_array( $value ) ) {
 			return array_map( [ $this, 'sanitize_deep' ], $value );
 		}

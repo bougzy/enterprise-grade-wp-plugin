@@ -21,21 +21,30 @@ final class StringCondition implements ConditionInterface {
 		return __( 'Text', 'flavor-flow' );
 	}
 
-	public function evaluate( mixed $actual_value, string $operator, mixed $expected_value ): bool {
+	public function evaluate( $actual_value, string $operator, $expected_value ): bool {
 		$actual   = (string) $actual_value;
 		$expected = (string) $expected_value;
 
-		return match ( $operator ) {
-			'equals'         => $actual === $expected,
-			'not_equals'     => $actual !== $expected,
-			'contains'       => str_contains( $actual, $expected ),
-			'not_contains'   => ! str_contains( $actual, $expected ),
-			'starts_with'    => str_starts_with( $actual, $expected ),
-			'ends_with'      => str_ends_with( $actual, $expected ),
-			'is_empty'       => '' === $actual,
-			'is_not_empty'   => '' !== $actual,
-			default          => false,
-		};
+		switch ( $operator ) {
+			case 'equals':
+				return $actual === $expected;
+			case 'not_equals':
+				return $actual !== $expected;
+			case 'contains':
+				return false !== strpos( $actual, $expected );
+			case 'not_contains':
+				return false === strpos( $actual, $expected );
+			case 'starts_with':
+				return 0 === strpos( $actual, $expected );
+			case 'ends_with':
+				return substr( $actual, -strlen( $expected ) ) === $expected;
+			case 'is_empty':
+				return '' === $actual;
+			case 'is_not_empty':
+				return '' !== $actual;
+			default:
+				return false;
+		}
 	}
 
 	public function get_operators(): array {

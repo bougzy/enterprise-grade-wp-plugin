@@ -5,7 +5,7 @@
  * Description:       Enterprise-grade workflow automation for WordPress. Define triggers, conditions, and actions to automate any business process.
  * Version:           1.0.0
  * Requires at least: 6.0
- * Requires PHP:      8.0
+ * Requires PHP:      7.4
  * Author:            Flavancio Engineering
  * Author URI:        https://flavancio.io
  * License:           GPL-2.0-or-later
@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Plugin constants.
 define( 'FLAVOR_FLOW_VERSION', '1.0.0' );
 define( 'FLAVOR_FLOW_MINIMUM_WP', '6.0' );
-define( 'FLAVOR_FLOW_MINIMUM_PHP', '8.0' );
+define( 'FLAVOR_FLOW_MINIMUM_PHP', '7.4' );
 
 define( 'FLAVOR_FLOW_FILE', __FILE__ );
 define( 'FLAVOR_FLOW_DIR', plugin_dir_path( __FILE__ ) );

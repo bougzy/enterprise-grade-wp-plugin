@@ -109,7 +109,10 @@ final class ConditionEvaluator {
 	 *
 	 * Supports paths like "post.author_id" or simple "post_type".
 	 */
-	private function resolve_field( string $field, array $payload ): mixed {
+	/**
+	 * @return mixed
+	 */
+	private function resolve_field( string $field, array $payload ) {
 		$keys    = explode( '.', $field );
 		$current = $payload;
 

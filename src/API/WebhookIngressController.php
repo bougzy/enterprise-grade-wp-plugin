@@ -38,7 +38,7 @@ final class WebhookIngressController extends WP_REST_Controller {
 	/**
 	 * Validate the token and dispatch the payload as a trigger.
 	 */
-	public function handle_webhook( WP_REST_Request $request ): WP_REST_Response|WP_Error {
+	public function handle_webhook( WP_REST_Request $request ) {
 		$token   = sanitize_text_field( $request->get_param( 'token' ) );
 		$payload = $request->get_json_params();
 

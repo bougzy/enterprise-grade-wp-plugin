@@ -22,7 +22,10 @@ final class QueueManager {
 	 * @param int   $delay       Seconds to delay execution.
 	 * @return int|false Inserted row ID or false.
 	 */
-	public function push( int $workflow_id, array $payload, int $delay = 0 ): int|false {
+	/**
+	 * @return int|false Inserted row ID or false.
+	 */
+	public function push( int $workflow_id, array $payload, int $delay = 0 ) {
 		global $wpdb;
 
 		$settings     = get_option( 'flavor_flow_settings', [] );

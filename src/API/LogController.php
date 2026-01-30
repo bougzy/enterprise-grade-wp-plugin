@@ -21,7 +21,8 @@ final class LogController extends WP_REST_Controller {
 	protected $namespace = 'flavor-flow/v1';
 	protected $rest_base = 'logs';
 
-	private Logger $logger;
+	/** @var Logger */
+	private $logger;
 
 	public function __construct( Logger $logger ) {
 		$this->logger = $logger;

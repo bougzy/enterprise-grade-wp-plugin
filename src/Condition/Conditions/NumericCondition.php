@@ -21,19 +21,26 @@ final class NumericCondition implements ConditionInterface {
 		return __( 'Number', 'flavor-flow' );
 	}
 
-	public function evaluate( mixed $actual_value, string $operator, mixed $expected_value ): bool {
+	public function evaluate( $actual_value, string $operator, $expected_value ): bool {
 		$actual   = (float) $actual_value;
 		$expected = (float) $expected_value;
 
-		return match ( $operator ) {
-			'equals'              => abs( $actual - $expected ) < PHP_FLOAT_EPSILON,
-			'not_equals'          => abs( $actual - $expected ) >= PHP_FLOAT_EPSILON,
-			'greater_than'        => $actual > $expected,
-			'less_than'           => $actual < $expected,
-			'greater_than_equal'  => $actual >= $expected,
-			'less_than_equal'     => $actual <= $expected,
-			default               => false,
-		};
+		switch ( $operator ) {
+			case 'equals':
+				return abs( $actual - $expected ) < PHP_FLOAT_EPSILON;
+			case 'not_equals':
+				return abs( $actual - $expected ) >= PHP_FLOAT_EPSILON;
+			case 'greater_than':
+				return $actual > $expected;
+			case 'less_than':
+				return $actual < $expected;
+			case 'greater_than_equal':
+				return $actual >= $expected;
+			case 'less_than_equal':
+				return $actual <= $expected;
+			default:
+				return false;
+		}
 	}
 
 	public function get_operators(): array {

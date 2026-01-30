@@ -32,7 +32,11 @@ interface ConditionInterface {
 	 * @param mixed  $expected_value Value set by the user in the workflow config.
 	 * @return bool
 	 */
-	public function evaluate( mixed $actual_value, string $operator, mixed $expected_value ): bool;
+	/**
+	 * @param mixed $actual_value
+	 * @param mixed $expected_value
+	 */
+	public function evaluate( $actual_value, string $operator, $expected_value ): bool;
 
 	/**
 	 * Available operators for this condition type.

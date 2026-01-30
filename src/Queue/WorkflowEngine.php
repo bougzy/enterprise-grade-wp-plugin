@@ -25,12 +25,29 @@ use flavor_flow\PostType\WorkflowPostType;
  */
 final class WorkflowEngine {
 
+	/** @var ConditionEvaluator */
+	private $evaluator;
+
+	/** @var ActionRegistry */
+	private $actions;
+
+	/** @var QueueManager */
+	private $queue;
+
+	/** @var Logger */
+	private $logger;
+
 	public function __construct(
-		private readonly ConditionEvaluator $evaluator,
-		private readonly ActionRegistry $actions,
-		private readonly QueueManager $queue,
-		private readonly Logger $logger,
-	) {}
+		ConditionEvaluator $evaluator,
+		ActionRegistry $actions,
+		QueueManager $queue,
+		Logger $logger
+	) {
+		$this->evaluator = $evaluator;
+		$this->actions   = $actions;
+		$this->queue     = $queue;
+		$this->logger    = $logger;
+	}
 
 	/**
 	 * Handle a dispatched trigger — find matching workflows and enqueue them.
